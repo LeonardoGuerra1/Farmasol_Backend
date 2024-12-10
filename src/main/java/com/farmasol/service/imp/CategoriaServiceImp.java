@@ -15,10 +15,6 @@ public class CategoriaServiceImp implements CategoriaService {
     CategoriaRepository categoriaRepository;
 
     public List<Categoria> getCategorias() {
-        List<Categoria> asd = categoriaRepository.findAll();
-        asd.forEach(as -> {
-            System.out.println(as.getNombre());
-        });
         return categoriaRepository.findAll();
     }
 
@@ -37,10 +33,10 @@ public class CategoriaServiceImp implements CategoriaService {
     }
 
     public boolean deleteCategoria(int id) {
-        boolean found = categoriaRepository.existsById(id);
-        if (!found) return false;
+        Categoria found = categoriaRepository.findById(id).orElse(null);
+        if (found == null) return false;
         else {
-            categoriaRepository.deleteById(id);
+            categoriaRepository.safeDeleteCategoria(id);
             return true;
         }
     }

@@ -19,7 +19,7 @@ public class SalidaProducto {
     private LocalDate fechaRegistro;
 
     @Column(columnDefinition = "bit default 1")
-    public boolean estado;
+    private boolean estado;
 
     @Column(columnDefinition = "text not null")
     private String motivo;

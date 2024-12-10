@@ -21,7 +21,7 @@ public class EntradaProducto {
     private double montoTotal;
 
     @Column(columnDefinition = "bit default 1")
-    public boolean estado;
+    private boolean estado;
 
     @ManyToOne
     @JoinColumn(name = "idUsuario")

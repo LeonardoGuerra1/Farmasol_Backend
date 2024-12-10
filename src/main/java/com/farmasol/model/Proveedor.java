@@ -37,5 +37,4 @@ public class Proveedor {
 
     @Column(columnDefinition = "varchar(50) not null")
     private String nombreRepresentante;
-
 }

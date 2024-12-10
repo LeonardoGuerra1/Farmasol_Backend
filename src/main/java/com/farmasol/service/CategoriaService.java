@@ -1,6 +1,7 @@
 package com.farmasol.service;
 
 import com.farmasol.model.Categoria;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 

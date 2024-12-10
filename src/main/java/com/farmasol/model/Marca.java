@@ -14,4 +14,7 @@ public class Marca {
 
     @Column(columnDefinition = "varchar(100) not null")
     private String nombre;
+
+    @Column(columnDefinition = "bit default 1")
+    private boolean estado;
 }
