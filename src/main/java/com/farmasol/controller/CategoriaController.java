@@ -1,6 +1,7 @@
 package com.farmasol.controller;
 
 import com.farmasol.model.Categoria;
+import com.farmasol.model.Usuario;
 import com.farmasol.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,7 +54,10 @@ public class CategoriaController {
     public ResponseEntity<?> updateCategoria(@RequestBody Categoria categoria) {
         try {
             Categoria updated = categoriaService.updateCategoria(categoria);
-            return new ResponseEntity<>(updated, HttpStatus.OK);
+            if (updated == null)
+                return new ResponseEntity<>("No se encontró una categoría con el id ingresado.", HttpStatus.NOT_FOUND);
+            else
+                return new ResponseEntity<>(updated, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Algo salió mal.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -63,6 +67,7 @@ public class CategoriaController {
     public ResponseEntity<?> deleteCategoria(@PathVariable int id) {
         try {
             boolean deleted = categoriaService.deleteCategoria(id);
+            System.out.println(deleted);
             if (deleted)
                 return new ResponseEntity<>("Categoria eliminada correctamente.", HttpStatus.OK);
             else

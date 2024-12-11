@@ -1,7 +1,8 @@
 package com.farmasol.controller;
 
+import com.farmasol.model.SalidaProducto;
 import com.farmasol.model.Usuario;
-import com.farmasol.service.UsuarioService;
+import com.farmasol.service.SalidaProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,16 +11,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuario")
-public class UsuarioController {
+@RequestMapping("/salida_producto")
+public class SalidaProductoController {
 
     @Autowired
-    UsuarioService usuarioService;
+    SalidaProductoService salidaProductoService;
 
     @GetMapping
-    public ResponseEntity<?> getUsuarios() {
+    public ResponseEntity<?> getSalidaProductos() {
         try {
-            List<Usuario> list = usuarioService.getUsuarios();
+            List<SalidaProducto> list = salidaProductoService.getSalidaProductos();
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>("Algo salió mal.", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -29,9 +30,9 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getPorId(@PathVariable int id) {
         try {
-            Usuario found = usuarioService.getPorId(id);
+            SalidaProducto found = salidaProductoService.getPorId(id);
             if (found == null)
-                return new ResponseEntity<>("No se encontró un usuario con el id ingresado.", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("No se encontró una salida de producto con el id ingresado.", HttpStatus.NOT_FOUND);
             else
                 return new ResponseEntity<>(found, HttpStatus.OK);
         } catch (Exception e) {
@@ -40,9 +41,9 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveCategoria(@RequestBody Usuario usuario) {
+    public ResponseEntity<?> saveSalidaProducto(@RequestBody SalidaProducto salidaProducto) {
         try {
-            Usuario saved = usuarioService.saveUsuario(usuario);
+            SalidaProducto saved = salidaProductoService.saveSalidaProducto(salidaProducto);
             return new ResponseEntity<>(saved, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Algo salió mal.", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -50,11 +51,11 @@ public class UsuarioController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updateCategoria(@RequestBody Usuario usuario) {
+    public ResponseEntity<?> updateSalidaProducto(@RequestBody SalidaProducto salidaProducto) {
         try {
-            Usuario updated = usuarioService.updateUsuario(usuario);
+            SalidaProducto updated = salidaProductoService.updateSalidaProducto(salidaProducto);
             if (updated == null)
-                return new ResponseEntity<>("No se encontró un usuario con el id ingresado.", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("No se encontró una salida de producto con el id ingresado.", HttpStatus.NOT_FOUND);
             else
                 return new ResponseEntity<>(updated, HttpStatus.OK);
         } catch (Exception e) {
@@ -63,13 +64,13 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCategoria(@PathVariable int id) {
+    public ResponseEntity<?> deleteSalidaProducto(@PathVariable int id) {
         try {
-            boolean deleted = usuarioService.deleteUsuario(id);
+            boolean deleted = salidaProductoService.deleteSalidaProducto(id);
             if (!deleted)
-                return new ResponseEntity<>("No se encontró un usuario con el id ingresado.", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("No se encontró una salida de producto con el id ingresado.", HttpStatus.NOT_FOUND);
             else
-                return new ResponseEntity<>("Usuario eliminado correctamente.", HttpStatus.OK);
+                return new ResponseEntity<>("Salida de producto eliminada correctamente.", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Algo salió mal.", HttpStatus.INTERNAL_SERVER_ERROR);
         }

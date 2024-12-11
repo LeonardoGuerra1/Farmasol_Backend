@@ -36,7 +36,7 @@ public class UsuarioServiceImp implements UsuarioService {
         Usuario found = usuarioRepository.findById(id).orElse(null);
         if (found == null) return false;
         else {
-            usuarioRepository.safeDeleteCategoria(id);
+            usuarioRepository.safeDeleteUsuario(id);
             return true;
         }
     }

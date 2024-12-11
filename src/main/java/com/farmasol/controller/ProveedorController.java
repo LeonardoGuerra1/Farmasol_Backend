@@ -1,7 +1,7 @@
 package com.farmasol.controller;
 
-import com.farmasol.model.Usuario;
-import com.farmasol.service.UsuarioService;
+import com.farmasol.model.Proveedor;
+import com.farmasol.service.ProveedorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuario")
-public class UsuarioController {
+@RequestMapping("/proveedor")
+public class ProveedorController {
 
     @Autowired
-    UsuarioService usuarioService;
+    ProveedorService proveedorService;
 
     @GetMapping
-    public ResponseEntity<?> getUsuarios() {
+    public ResponseEntity<?> getProveedores() {
         try {
-            List<Usuario> list = usuarioService.getUsuarios();
+            List<Proveedor> list = proveedorService.getProveedores();
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>("Algo salió mal.", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -29,9 +29,9 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getPorId(@PathVariable int id) {
         try {
-            Usuario found = usuarioService.getPorId(id);
+            Proveedor found = proveedorService.getPorId(id);
             if (found == null)
-                return new ResponseEntity<>("No se encontró un usuario con el id ingresado.", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("No se encontró un proveedor con el id ingresado.", HttpStatus.NOT_FOUND);
             else
                 return new ResponseEntity<>(found, HttpStatus.OK);
         } catch (Exception e) {
@@ -40,9 +40,9 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveCategoria(@RequestBody Usuario usuario) {
+    public ResponseEntity<?> saveProveedor(@RequestBody Proveedor proveedor) {
         try {
-            Usuario saved = usuarioService.saveUsuario(usuario);
+            Proveedor saved = proveedorService.saveProveedor(proveedor);
             return new ResponseEntity<>(saved, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Algo salió mal.", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -50,11 +50,11 @@ public class UsuarioController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updateCategoria(@RequestBody Usuario usuario) {
+    public ResponseEntity<?> updateProveedor(@RequestBody Proveedor proveedor) {
         try {
-            Usuario updated = usuarioService.updateUsuario(usuario);
+            Proveedor updated = proveedorService.updateProveedor(proveedor);
             if (updated == null)
-                return new ResponseEntity<>("No se encontró un usuario con el id ingresado.", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("No se encontró un proveedor con el id ingresado.", HttpStatus.NOT_FOUND);
             else
                 return new ResponseEntity<>(updated, HttpStatus.OK);
         } catch (Exception e) {
@@ -63,13 +63,13 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCategoria(@PathVariable int id) {
+    public ResponseEntity<?> deleteProveedor(@PathVariable int id) {
         try {
-            boolean deleted = usuarioService.deleteUsuario(id);
+            boolean deleted = proveedorService.deleteProveedor(id);
             if (!deleted)
-                return new ResponseEntity<>("No se encontró un usuario con el id ingresado.", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("No se encontró un proveedor con el id ingresado.", HttpStatus.NOT_FOUND);
             else
-                return new ResponseEntity<>("Usuario eliminado correctamente.", HttpStatus.OK);
+                return new ResponseEntity<>("Proveedor eliminado correctamente.", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Algo salió mal.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
