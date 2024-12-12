@@ -4,16 +4,26 @@ import com.farmasol.model.Usuario;
 import com.farmasol.repository.UsuarioRepository;
 import com.farmasol.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
 @Service
 public class UsuarioServiceImp implements UsuarioService {
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
     UsuarioRepository usuarioRepository;
 
+    
+    public UsuarioServiceImp() {
+    	this.passwordEncoder = new BCryptPasswordEncoder();
+    }
+    
     public List<Usuario> getUsuarios() {
         return usuarioRepository.findAll();
     }
@@ -23,6 +33,8 @@ public class UsuarioServiceImp implements UsuarioService {
     }
 
     public Usuario saveUsuario(Usuario usuario) {
+     	String encoderPassword = this.passwordEncoder.encode(usuario.getContrasena());
+    	usuario.setContrasena(encoderPassword);
         return usuarioRepository.save(usuario);
     }
 

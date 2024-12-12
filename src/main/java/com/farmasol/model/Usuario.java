@@ -1,9 +1,15 @@
 package com.farmasol.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
@@ -18,7 +24,7 @@ public class Usuario {
     @Column(columnDefinition = "varchar(50) not null")
     private String apellido;
 
-    @Column(columnDefinition = "varchar(50) not null")
+    @Column(columnDefinition = "varchar(255) not null")
     private String contrasena;
 
     @Column(columnDefinition = "varchar(9) not null")
@@ -34,5 +40,5 @@ public class Usuario {
     private String dni;
 
     @Column(columnDefinition = "bit default 1")
-    private boolean estado;
+    private boolean estado;  
 }
