@@ -33,4 +33,5 @@ build/
 .vscode/
 
 ### Maven
+src/main/resources/application.properties
 .mvn/

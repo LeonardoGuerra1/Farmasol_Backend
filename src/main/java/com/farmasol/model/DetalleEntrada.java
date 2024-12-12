@@ -1,5 +1,6 @@
 package com.farmasol.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,9 +21,11 @@ public class DetalleEntrada {
 
     @ManyToOne
     @JoinColumn(name = "idEntrada")
+    @JsonIgnoreProperties(value = { "usuario", "proveedor", "detalleEntradaList" })
     private EntradaProducto entradaProducto;
 
     @ManyToOne
     @JoinColumn(name = "idProducto")
+    @JsonIgnoreProperties(value = { "proveedor", "categoria", "marca" })
     private Producto producto;
 }
