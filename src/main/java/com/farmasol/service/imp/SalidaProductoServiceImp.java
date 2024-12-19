@@ -1,6 +1,8 @@
 package com.farmasol.service.imp;
 
+import com.farmasol.model.EntradaProducto;
 import com.farmasol.model.SalidaProducto;
+import com.farmasol.repository.DetalleSalidaRepository;
 import com.farmasol.repository.SalidaProductoRepository;
 import com.farmasol.service.SalidaProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ public class SalidaProductoServiceImp implements SalidaProductoService {
     @Autowired
     SalidaProductoRepository salidaProductoRepository;
 
+    @Autowired
+    DetalleSalidaRepository detalleSalidaRepository;
+
     public List<SalidaProducto> getSalidaProductos() {
         return salidaProductoRepository.findAll();
     }
@@ -23,7 +28,12 @@ public class SalidaProductoServiceImp implements SalidaProductoService {
     }
 
     public SalidaProducto saveSalidaProducto(SalidaProducto salidaProducto) {
-        return salidaProductoRepository.save(salidaProducto);
+        SalidaProducto saved = salidaProductoRepository.save(salidaProducto);
+        saved.getDetalleSalidaList().forEach(i -> {
+            i.setSalidaProducto(saved);
+            detalleSalidaRepository.save(i);
+        });
+        return saved;
     }
 
     public SalidaProducto updateSalidaProducto(SalidaProducto salidaProducto) {
